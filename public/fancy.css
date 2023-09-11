@@ -1,0 +1,36 @@
+html,
+body {
+    width: 100%;
+    height: 100;
+    margin: 0;
+    background: #0bcaff;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    color: rgba(0, 0, 0, 0.7);
+    font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-weight: 100;
+    font-size: 32px;
+}
+
+img {
+    height: 400px;
+    margin-top: 60px;
+}
+
+h1 {
+    color: rgb(75, 41, 27);
+    font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-weight: 100;
+    font-size: 64px;
+}
+
+.links {
+    display: flex;
+    justify-content: center;
+}
+
+.links a {
+    color: rgba(255, 255, 255);
+    margin: 20px;
+}
