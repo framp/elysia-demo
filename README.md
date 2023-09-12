@@ -7,21 +7,19 @@ An Elysia Demo server for an upcoming presentation.
 Features:
  - Automatic routes loading
  - REST API with Eden
- - GraphQL API
- - TRPC API
+ - GraphQL API + Playground
+ - tRPC API
  - Swagger support
  - Static Files
  - React SSR Rendering
  - React hydration on the client-side
  - Prisma + SQLite
+ - Demo React App doing CRUD operations in Eden, tRPC
 
 ## TODO:
- - Use models
- - Add client side calls to test Eden
- - Add client side calls to test TRPC
- - Use redis for something
- - Expose the same data from all three APIs
+ - Fix types
  - Implement authentication
+ - Use redis for something?
 
 ## Development
 To start the development server run:

@@ -1,24 +1,23 @@
-import { swagger } from "@elysiajs/swagger";
-import { Elysia, t } from "elysia";
+import { Elysia } from "elysia";
 
-import { apollo } from "@elysiajs/apollo";
 import { bearer } from "@elysiajs/bearer";
 import { cookie } from "@elysiajs/cookie";
 import { cors } from "@elysiajs/cors";
-import { edenTreaty } from "@elysiajs/eden";
 import { jwt } from "@elysiajs/jwt";
-import staticPlugin from "@elysiajs/static";
-import { trpc } from "@elysiajs/trpc";
 import { autoroutes } from "elysia-autoroutes";
+
+import apollo from "@elysiajs/apollo";
+import staticPlugin from "@elysiajs/static";
+import { swagger } from "@elysiajs/swagger";
+import { trpc } from "@elysiajs/trpc";
 import * as pack from "../package.json";
+import { port } from "./config";
 import { resolvers, typeDefs } from "./graphql";
 import cache from "./plugins/cache";
 import database from "./plugins/database";
-import router from "./trpc";
+import router, { createContext } from "./trpc";
 
 export const app = new Elysia()
-	.use(await database())
-	// .use(await cache())
 	.use(
 		swagger({
 			documentation: {
@@ -29,16 +28,18 @@ export const app = new Elysia()
 			},
 		}),
 	)
-	.use(autoroutes({ routesDir: "./http" }))
+	.use(await database())
+	// .use(await cache())
 	.use(
 		apollo({
 			typeDefs,
 			resolvers,
 		}),
 	)
-	.use(trpc(router))
+	.use(trpc(router, { createContext }))
+	.use(autoroutes({ routesDir: "./http" }))
 	.use(staticPlugin())
-	.listen(1337);
+	.listen(port);
 
 export type ElysiaApp = typeof app;
 

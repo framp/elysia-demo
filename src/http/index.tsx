@@ -4,13 +4,14 @@ import Document from "../components/Document";
 
 export const App = () => (
 	<>
+		<link rel="stylesheet" type="text/css" href="/public/fancy.css" />
 		<img src="/public/lion.svg" alt="A random cartoon of a lion super hero" />
 		<h1>Hello World</h1>
 		<div className="links">
 			<a href="/swagger">Swagger</a>
 			<a href="/graphql">GraphQL</a>
 			<a href="/eden">Eden</a>
-			<a href="/trpc">TRPC</a>
+			<a href="/trpc">tRPC</a>
 		</div>
 	</>
 );

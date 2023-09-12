@@ -10,7 +10,12 @@ export default (props: DocumentProps) => (
 	<html lang="en">
 		<head>
 			<title>{props.title}</title>
-			<link rel="stylesheet" type="text/css" href="/public/fancy.css" />
+			{/* <link rel="stylesheet" type="text/css" href="/public/fancy.css" /> */}
+			<link
+				rel="stylesheet"
+				type="text/css"
+				href="/public/js/styles-afcee62e3d68e96d.css"
+			/>
 		</head>
 		<body>
 			<div id="root">{props.children}</div>

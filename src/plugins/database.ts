@@ -1,7 +1,8 @@
 import { PrismaClient } from "@prisma/client";
-import Elysia, { ElysiaInstance } from "elysia";
+import Elysia from "elysia";
+
+export const db = new PrismaClient();
 
 export default async () => {
-	const db = new PrismaClient();
 	return (app: Elysia) => app.decorate("getDb", () => db);
 };
