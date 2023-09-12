@@ -25,7 +25,7 @@ Features:
 To start the development server run:
 ```bash
 bun dev
-bun dev-frontend # automatically buidl 
+bun dev-frontend # automatically build the frontend
 ```
 
 Open http://localhost:1337/ with your browser to see the result.
