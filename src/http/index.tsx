@@ -1,5 +1,5 @@
-import { ReactNode, useEffect } from "react";
 import { renderToString } from "react-dom/server";
+import { ElysiaApp } from "..";
 import Document from "../components/Document";
 
 export const App = () => (
@@ -15,16 +15,20 @@ export const App = () => (
 	</>
 );
 
-export const get = () =>
-	new Response(
-		renderToString(
-			<Document name="index" title="Elysia Hello World">
-				<App />
-			</Document>,
-		),
-		{
-			headers: {
-				"content-type": "text/html; charset=utf8",
-			},
-		},
+export default (app: ElysiaApp) =>
+	app.get(
+		"/",
+		() =>
+			new Response(
+				renderToString(
+					<Document name="index" title="Elysia Hello World">
+						<App />
+					</Document>,
+				),
+				{
+					headers: {
+						"content-type": "text/html; charset=utf8",
+					},
+				},
+			),
 	);

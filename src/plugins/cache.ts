@@ -1,5 +1,5 @@
-import { createClient } from "redis";
 import Elysia from "elysia";
+import { createClient } from "redis";
 
 export default async () => {
 	const cache = createClient();

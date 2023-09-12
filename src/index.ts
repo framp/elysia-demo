@@ -12,9 +12,9 @@ import { trpc } from "@elysiajs/trpc";
 import { autoroutes } from "elysia-autoroutes";
 import * as pack from "../package.json";
 import { resolvers, typeDefs } from "./graphql";
-import router from "./trpc";
-import database from "./plugins/database";
 import cache from "./plugins/cache";
+import database from "./plugins/database";
+import router from "./trpc";
 
 export const app = new Elysia()
 	.use(await database())
@@ -41,12 +41,6 @@ export const app = new Elysia()
 	.listen(1337);
 
 export type ElysiaApp = typeof app;
-export type GetHandler = Parameters<typeof app.get>[1];
-export type PostHandler = Parameters<typeof app.post>[1];
-export type PutHandler = Parameters<typeof app.put>[1];
-export type DelHandler = Parameters<typeof app.delete>[1];
-export type Hooks = Parameters<typeof app.get>[2];
-
 
 console.log(
 	`🦊 Elysia is running at http://${app.server?.hostname}:${app.server?.port}`,
