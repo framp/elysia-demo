@@ -4,6 +4,8 @@ An Elysia Demo server for an upcoming presentation.
 
 <img src="https://i.imgur.com/kYRrkxm.jpeg" />
 
+<img src="https://imgur.com/a/RPenbTJ" />
+
 Features:
  - Automatic routes loading
  - REST API with Eden
