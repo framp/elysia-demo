@@ -7,7 +7,6 @@ An Elysia Demo server for an upcoming presentation.
 <img src="https://i.imgur.com/NfBOdlb.png" />
 
 Features:
- - Automatic routes loading
  - REST API with Eden
  - GraphQL API + Playground
  - tRPC API
@@ -18,15 +17,17 @@ Features:
  - Prisma + SQLite
  - Demo React App doing CRUD operations in Eden, tRPC
 
-## TODO:
+## TODO
+
  - Implement authentication
  - Use redis for something?
 
+## Notes
 
-## Notes
  - Using "elysia-autoroutes" or anything which needs to run async to change the signature of the API will break type inference
 
 ## Development
+
 To start the development server run:
 ```bash
 bun dev
