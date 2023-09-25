@@ -7,7 +7,7 @@
         // enable latest features
         "lib": [
             "esnext",
-            "DOM"
+            "DOM",
         ],
         "module": "esnext",
         "target": "esnext",

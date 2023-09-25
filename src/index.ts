@@ -1,23 +1,21 @@
 import { Elysia } from "elysia";
 
-import { bearer } from "@elysiajs/bearer";
-import { cookie } from "@elysiajs/cookie";
-import { cors } from "@elysiajs/cors";
-import { jwt } from "@elysiajs/jwt";
-import { autoroutes } from "elysia-autoroutes";
-
-import apollo from "@elysiajs/apollo";
 import staticPlugin from "@elysiajs/static";
 import { swagger } from "@elysiajs/swagger";
-import { trpc } from "@elysiajs/trpc";
 import * as pack from "../package.json";
+import api from "./api";
 import { port } from "./config";
-import { resolvers, typeDefs } from "./graphql";
-import cache from "./plugins/cache";
+import graphql from "./graphql";
+import http from "./http";
 import database from "./plugins/database";
-import router, { createContext } from "./trpc";
+import trpc from "./trpc";
 
-export const app = new Elysia()
+export const appWithDatabase = new Elysia().use(await database());
+export type AppWithDatabase = typeof appWithDatabase;
+export const appWithApi = appWithDatabase.use(api);
+export type AppWithApi = typeof appWithApi;
+
+export const app = appWithApi
 	.use(
 		swagger({
 			documentation: {
@@ -28,20 +26,13 @@ export const app = new Elysia()
 			},
 		}),
 	)
-	.use(await database())
-	// .use(await cache())
-	.use(
-		apollo({
-			typeDefs,
-			resolvers,
-		}),
-	)
-	.use(trpc(router, { createContext }))
-	.use(autoroutes({ routesDir: "./http" }))
+	.use(graphql)
+	.use(trpc)
+	.use(http)
 	.use(staticPlugin())
 	.listen(port);
 
-export type ElysiaApp = typeof app;
+export type App = typeof app;
 
 console.log(
 	`🦊 Elysia is running at http://${app.server?.hostname}:${app.server?.port}`,

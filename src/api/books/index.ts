@@ -1,16 +1,15 @@
-import { t } from "elysia";
-import { bookSchema } from "../../../models/book";
+import { bookSchema } from "../../models/book";
 
-import { ElysiaApp } from "../../..";
+import { AppWithDatabase } from "../..";
 
-export default (app: ElysiaApp) =>
+export default (app: AppWithDatabase) =>
 	app
-		.get("/", ({ getDb }) => {
+		.get("/api/books", ({ getDb }) => {
 			const db = getDb();
 			return db.book.findMany();
 		})
 		.post(
-			"/",
+			"/api/books",
 			({ getDb, body }) => {
 				const db = getDb();
 				return db.book.create({ data: body });

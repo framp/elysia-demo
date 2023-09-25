@@ -1,7 +1,8 @@
-import { gql } from "@elysiajs/apollo";
+import apollo, { gql } from "@elysiajs/apollo";
 import { db } from "../plugins/database";
 
-export const typeDefs = gql`
+export default apollo({
+	typeDefs: gql`
     type Book {
 		id: Int
         name: String
@@ -27,20 +28,20 @@ export const typeDefs = gql`
 		description: String
 		thumbnail: String
 	}
-`;
-
-export const resolvers = {
-	Query: {
-		books: () => db.book.findMany(),
-		book: (_, { id }) => db.book.findUnique({ where: { id: Number(id) } }),
+`,
+	resolvers: {
+		Query: {
+			books: () => db.book.findMany(),
+			book: (_, { id }) => db.book.findUnique({ where: { id: Number(id) } }),
+		},
+		Mutation: {
+			createBook: (_, { book }) => db.book.create({ data: book }),
+			updateBook: (_, { id, book }) =>
+				db.book.update({
+					where: { id: Number(id) },
+					data: book,
+				}),
+			deleteBook: (_, { id }) => db.book.delete({ where: { id: Number(id) } }),
+		},
 	},
-	Mutation: {
-		createBook: (_, { book }) => db.book.create({ data: book }),
-		updateBook: (_, { id, book }) =>
-			db.book.update({
-				where: { id: Number(id) },
-				data: book,
-			}),
-		deleteBook: (_, { id }) => db.book.delete({ where: { id: Number(id) } }),
-	},
-};
+});

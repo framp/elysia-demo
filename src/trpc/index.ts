@@ -1,12 +1,18 @@
-import { compile } from "@elysiajs/trpc";
+import { trpc } from "@elysiajs/trpc";
 import { initTRPC } from "@trpc/server";
 import { FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
-import { t } from "elysia";
-import { bookSchema } from "../models/book";
+import { z as t } from "zod";
 import { db } from "../plugins/database";
 
 export const createContext = async (opts: FetchCreateContextFnOptions) => ({
 	getDb: () => db,
+});
+
+const bookSchema = t.object({
+	name: t.string(),
+	author: t.string(),
+	description: t.string(),
+	thumbnail: t.string(),
 });
 
 const trpcClient = initTRPC
@@ -19,25 +25,25 @@ const router = trpcClient.router({
 		return db.book.findMany();
 	}),
 	getBook: trpcClient.procedure
-		.input(compile(t.Object({ id: t.Number() })))
+		.input(t.object({ id: t.number() }))
 		.query(({ input, ctx }) => {
 			const db = ctx.getDb();
 			return db.book.findUnique({ where: { id: Number(input.id) } });
 		}),
 	deleteBook: trpcClient.procedure
-		.input(compile(t.Object({ id: t.Number() })))
+		.input(t.object({ id: t.number() }))
 		.mutation(({ input, ctx }) => {
 			const db = ctx.getDb();
 			return db.book.delete({ where: { id: Number(input.id) } });
 		}),
 	createBook: trpcClient.procedure
-		.input(compile(t.Object({ book: bookSchema })))
+		.input(t.object({ book: bookSchema }))
 		.mutation(({ input, ctx }) => {
 			const db = ctx.getDb();
 			return db.book.create({ data: input.book });
 		}),
 	updateBook: trpcClient.procedure
-		.input(compile(t.Object({ id: t.Number(), book: bookSchema })))
+		.input(t.object({ id: t.number(), book: bookSchema }))
 		.mutation(({ input, ctx }) => {
 			const db = ctx.getDb();
 			return db.book.update({
@@ -49,4 +55,4 @@ const router = trpcClient.router({
 
 export type Router = typeof router;
 
-export default router;
+export default trpc(router, { createContext });

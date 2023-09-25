@@ -2,16 +2,17 @@ import { edenTreaty } from "@elysiajs/eden";
 import { Theme } from "@radix-ui/themes";
 
 import "@radix-ui/themes/styles.css";
+import Elysia from "elysia";
 import { ReactNode } from "react";
 import { renderToString } from "react-dom/server";
 import { Toaster } from "react-hot-toast";
-import type { ElysiaApp } from "..";
+import type { AppWithApi } from "..";
 import BookApp from "../components/BookApp";
 import Document from "../components/Document";
 import { origin } from "../config";
 import { Book } from "../models/book";
 
-const app = edenTreaty<ElysiaApp>(origin);
+const app = edenTreaty<AppWithApi>(origin);
 
 export const App = (): ReactNode => {
 	const bookAppProps = {
@@ -28,7 +29,7 @@ export const App = (): ReactNode => {
 			if (error) {
 				throw error;
 			} else {
-				return data;
+				return;
 			}
 		},
 		createBook: async (book: Omit<Book, "id">) => {
@@ -37,7 +38,7 @@ export const App = (): ReactNode => {
 			if (error) {
 				throw error;
 			} else {
-				return data;
+				return;
 			}
 		},
 		updateBook: async (id: number, book: Omit<Book, "id">) => {
@@ -45,7 +46,7 @@ export const App = (): ReactNode => {
 			if (error) {
 				throw error;
 			} else {
-				return data;
+				return;
 			}
 		},
 	};
@@ -59,9 +60,9 @@ export const App = (): ReactNode => {
 		</>
 	);
 };
-export default (app: ElysiaApp) =>
+export default (app: Elysia) =>
 	app.get(
-		"/",
+		"/eden",
 		() =>
 			new Response(
 				renderToString(

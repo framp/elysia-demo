@@ -1,24 +1,25 @@
 import { t } from "elysia";
-import { bookSchema } from "../../../models/book";
+import { bookSchema } from "../../models/book";
 
-import { ElysiaApp } from "../../..";
-
+import { AppWithDatabase } from "../..";
 const params = t.Object({ id: t.String() });
 
-export default (app: ElysiaApp) =>
+export default (app: AppWithDatabase) =>
 	app
 		.get(
-			"/",
+			"/api/books/:id",
 			({ getDb, params }) => {
 				const db = getDb();
 				return db.book.findUnique({
 					where: { id: Number(params.id) },
 				});
 			},
-			{ params },
+			{
+				params,
+			},
 		)
 		.put(
-			"/",
+			"/api/books/:id",
 			({ getDb, params, body }) => {
 				const db = getDb();
 				return db.book.update({
@@ -29,7 +30,7 @@ export default (app: ElysiaApp) =>
 			{ params, body: bookSchema },
 		)
 		.delete(
-			"/",
+			"/api/books/:id",
 			({ getDb, params }) => {
 				const db = getDb();
 				return db.book.delete({

@@ -19,9 +19,12 @@ Features:
  - Demo React App doing CRUD operations in Eden, tRPC
 
 ## TODO:
- - Fix types
  - Implement authentication
  - Use redis for something?
+
+
+## Notes
+ - Using "elysia-autoroutes" or anything which needs to run async to change the signature of the API will break type inference
 
 ## Development
 To start the development server run:

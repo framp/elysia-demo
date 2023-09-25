@@ -1,6 +1,9 @@
+import Elysia from "elysia";
+import { ReactElement } from "react";
 import { renderToString } from "react-dom/server";
-import { ElysiaApp } from "..";
 import Document from "../components/Document";
+import edenPage from "./eden";
+import trpcPage from "./trpc";
 
 export const App = () => (
 	<>
@@ -16,7 +19,7 @@ export const App = () => (
 	</>
 );
 
-export default (app: ElysiaApp) =>
+const indexPage = (app: Elysia) =>
 	app.get(
 		"/",
 		() =>
@@ -33,3 +36,5 @@ export default (app: ElysiaApp) =>
 				},
 			),
 	);
+
+export default (app: Elysia) => app.use(indexPage).use(edenPage).use(trpcPage);
