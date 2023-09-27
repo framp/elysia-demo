@@ -26,6 +26,13 @@ Features:
 
  - Using "elysia-autoroutes" or anything which needs to run async to change the signature of the API will break type inference
 
+## Setup
+
+```
+bun i                   # install dependencies
+bunx prisma generate    # generates prisma types
+```
+
 ## Development
 
 To start the development server run:
